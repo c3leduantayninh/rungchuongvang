@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MC Control — Rung Chuông Vàng</title>
+<style>
+body{margin:0;background:#060b1d;color:#fff;font:16px system-ui;padding:30px}main{max-width:850px;margin:auto}button{padding:14px 20px;margin:6px;border:0;border-radius:10px;font-weight:800;cursor:pointer}.start{background:#ffd34e}.next{background:#48dcff}.finish{background:#ff647d;color:#fff}.reset{background:#777;color:#fff}.card{padding:24px;border:1px solid #243252;border-radius:18px;background:#0d1730;margin:16px 0}pre{white-space:pre-wrap;color:#aebada}
+</style></head><body><main><h1>🎙️ MC CONTROL — RUNG CHUÔNG VÀNG</h1>
+<div class="card"><p>Host key: <input id="key" type="password" style="padding:10px;background:#111a35;color:#fff;border:1px solid #334064;border-radius:8px"></p>
+<button class="start" onclick="cmd('start')">BẮT ĐẦU CÂU 1</button><button class="next" onclick="cmd('next')">CÂU TIẾP THEO</button><button class="finish" onclick="cmd('finish')">KẾT THÚC</button><button class="reset" onclick="cmd('reset')">RESET</button></div>
+<div class="card"><h2>Trạng thái</h2><pre id="out">Chưa kết nối</pre></div></main>
+<script src="config.js"></script><script>
+function call(cmd){return new Promise((res,rej)=>{const cb="c"+Date.now();let s=document.createElement("script");window[cb]=x=>{delete window[cb];s.remove();x.ok?res(x):rej(x)};s.src=RCV_CONFIG.API_URL+"?action=host&cmd="+encodeURIComponent(cmd)+"&key="+encodeURIComponent(document.querySelector("#key").value)+"&callback="+cb;document.body.append(s)})}
+async function cmd(c){try{let r=await call(c);out.textContent=JSON.stringify(r,null,2)}catch(e){out.textContent=JSON.stringify(e,null,2)}}
+</script></body></html>
